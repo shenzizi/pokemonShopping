@@ -1,0 +1,13 @@
+.category {
+  text-align: center;
+  font-size: 1.6rem;
+  padding: 20px;
+  text-transform: capitalize;
+}
+
+.pokemons {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;;
+}
+

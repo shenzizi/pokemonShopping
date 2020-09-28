@@ -1,0 +1,12 @@
+.topbar {
+  width: 100vw;
+  background-color: lightblue;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  padding: 15px;
+}
+
+.topbar a {
+  margin: 0 20px;
+}
