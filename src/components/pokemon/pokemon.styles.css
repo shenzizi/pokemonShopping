@@ -31,9 +31,3 @@
   display: inline-block;
 }
 
-
-.collection-pokemons{
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-}

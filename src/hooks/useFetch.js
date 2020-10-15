@@ -3,7 +3,11 @@ import {
   useEffect
 } from 'react';
 
+import { useHistory } from 'react-router-dom';
+
 const useFetch = (url) => {
+  let history = useHistory();
+
   const initialState = {
     status: 'idle',
     error: null,
@@ -27,13 +31,22 @@ const useFetch = (url) => {
   useEffect(() => {
     dispatch({ type: 'FETCHING' });
     fetch(url)
-      .then(resp => resp.json())
       .then(resp => {
+        console.log(resp);
+        if (resp.status > 400) {
+          dispatch({ type: 'FETCH_ERROR', payload: resp.status });
+        }
+        return resp.json()
+      })
+      .then(resp => {
+        console.log(resp);
         dispatch({ type: 'FETCHED', payload: resp });
       });
-  }, [url])
+  }, [history, url])
 
   return state;
 }
 
 export default useFetch;
+
+// https://github.com/ooade/use-fetch-hook/blob/master/src/hooks.js

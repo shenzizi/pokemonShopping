@@ -3,70 +3,58 @@ import React, {
   useEffect
 } from 'react';
 
-import useFetch from '../../hooks/useFetch';
-
 import { Link } from "react-router-dom";
 
-import Pokemon from '../../components/pokemon/pokemon.component';
+import useQuery from '../../hooks/useQuery';
+import useAllQueries from '../../hooks/useAllQueries';
+
+import CollectionOverView from '../../components/collection-overview/collection-overview.component';
 
 import './home.styles.css';
 
 const Home = () => {
+  const transformData = (resp) => {
+    let obj = {};
+    resp.map(data => {
+      let pokemonCollection = {};
+      data.pokemon.slice(0, 5).map(d => {
+        const id = d.pokemon.url.match(/pokemon(.*)/g)[0].match(/\d+/g)[0];
+        pokemonCollection[id] = { name: d.pokemon.name, id }
+      })
+      obj[data.name] = pokemonCollection;
+    });
+
+    return obj;
+  }
+
   const [fetchUrls, setFetchUrls] = useState(null);
-  const [pokemon, setPokemon] = useState(null);
 
-  const { status, data, error } = useFetch('https://pokeapi.co/api/v2/ability/?limit=20&offset=20');
-
-  useEffect(() => {
-    let selectedPokemons = data.results && data.results.slice(0, 10);
-    setFetchUrls(selectedPokemons);
-  }, [data.results])
-
+  const { loading, data, error } = useQuery({ url: 'https://pokeapi.co/api/v2/ability/?limit=20&offset=20' });
+  const { loading: pokemonsLoading, data: pokemonsData, error: pokemonsError } = useAllQueries(fetchUrls ? { urls: fetchUrls } : { urls: null });
 
   useEffect(() => {
-    if (fetchUrls) {
-      let requests = fetchUrls.map(d => fetch(d.url));
-      Promise.all(requests)
-        .then(data => {
-          return Promise.all(data.map(d => d.json()))
-        })
-        .then(resp => {
-          let obj = {};
-          resp.map(data => {
-            obj[data.name] = data.pokemon.map(d => {
-              const id = d.pokemon.url.match(/pokemon(.*)/g)[0].match(/\d+/g)[0];
-              return { [id]: { name: d.pokemon.name, id } }
-            })
-          });
+    let selectedPokemonsUrls = data && data.results.slice(0, 10).map(p => p.url);
+    setFetchUrls(selectedPokemonsUrls);
+  }, [data])
 
-          setPokemon(obj);
-        })
-    }
-  }, [fetchUrls])
-
-  if (status === 'fetching' || !pokemon) {
+  if (loading || pokemonsLoading) {
     return <div>loading...</div>
   }
 
-  if (error) {
+  if (error || pokemonsError) {
     return <div>ERROR!</div>
   }
 
   return (
     <div>
       Pokemon
-      {Object.entries(pokemon).map(([key, value]) => {
+      {Object.entries(transformData(pokemonsData)).map(([key, value]) => {
         return (
           <div key={key}>
             <div className="category">
               <Link to={`/shop/${key}`}>{key}</Link>
             </div>
-            <div className="pokemons">
-              {value.slice(0, 5).map(obj =>
-                Object.values(obj).map(pokemon =>
-                  <Pokemon key={key} pokemon={({ ...pokemon, category: key })} />
-                ))}
-            </div>
+            <CollectionOverView pokemons={value} />
           </div>
         )
       })}
