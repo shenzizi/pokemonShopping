@@ -4,13 +4,13 @@ import {
   useRef
 } from 'react';
 
-import { useErrorStatus } from '../pages/error-handler/error-handler.component';
+import { useHistory } from 'react-router-dom';
 
 const useQuery = ({ url, transformData }) => {
+  const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
   const [apiData, setApiData] = useState();
-  const { setErrorStatusCode } = useErrorStatus();
   const mountedRef = useRef();
 
   useEffect(() => {
@@ -22,7 +22,9 @@ const useQuery = ({ url, transformData }) => {
     fetch(url)
       .then(resp => {
         if (resp.status > 400) {
-          setErrorStatusCode(resp.status);
+          history.replace(history.location.pathname, {
+            errorStatusCode: resp.status
+          })
         }
 
         return resp.json()
@@ -44,9 +46,9 @@ const useQuery = ({ url, transformData }) => {
       mountedRef.current = false;
     };
 
-  }, [setErrorStatusCode, transformData, url])
+  }, [history, transformData, url])
 
-  return { data: apiData, error, loading }
+  return { data: apiData, loading }
 }
 
 export default useQuery;
