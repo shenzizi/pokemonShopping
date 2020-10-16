@@ -18,7 +18,6 @@ import ErrorHandler from './pages/error-handler/error-handler.component';
 
 import './App.css';
 
-
 function App() {
   return (
 
