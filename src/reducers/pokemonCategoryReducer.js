@@ -2,7 +2,7 @@ import {
   FETCH_POKEMON_CATEGORY_SUCCESS,
   FETCH_POKEMON_CATEGORY_FAIL,
   FETCH_POKEMON_CATEGORY_START
-} from '../action/actions';
+} from '../actions/pokemonCategoryAction';
 
 const initialState = {
   loading: true,
@@ -21,7 +21,10 @@ function pokemonCategoryReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        data: action.data
+        data: {
+          ...state.data,
+          ...action.data
+        }
       }
     case FETCH_POKEMON_CATEGORY_FAIL:
       return {

@@ -2,7 +2,7 @@ import {
   FETCH_POKEMON_SUCCESS,
   FETCH_POKEMON_FAIL,
   FETCH_POKEMON_START
-} from '../action/actions';
+} from '../actions/pokemonAction';
 
 const initialState = {
   loading: true,
@@ -21,7 +21,10 @@ function pokemonReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        data: action.data
+        data: {
+          ...state.data,
+          ...action.data
+        }
       }
     case FETCH_POKEMON_FAIL:
       return {

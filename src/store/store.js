@@ -1,18 +1,17 @@
-import {
-  createStore,
-  combineReducers
-} from 'redux';
+import { applyMiddleware, createStore, compose } from 'redux';
+import thunk from 'redux-thunk';
 
-import pokemonCategoryReducer from '../reducer/pokemonCategoryReducer';
-import pokemonReducer from '../reducer/pokemonReducer';
+import rootReducer from '../reducers/rootReducer';
 
-const reducers = combineReducers({
-  pokemonCategory: pokemonCategoryReducer,
-  pokemon: pokemonReducer
-})
 
-let store = createStore(reducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const composeEnhancers =
+  typeof window === 'object' &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose;
+
+let store = createStore(rootReducer,
+  composeEnhancers(applyMiddleware(thunk)));
 
 export default store;
 

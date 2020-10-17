@@ -1,16 +1,16 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import './topbar.styles.css';
 
 
 const Topbar = () => {
   return (
-    <div className="topbar">
-      <Link to="/">Home</Link>
-      <Link to="/signin">Signin</Link>
-      <Link to="/cart">Cart</Link>
-    </div>
+    <nav className="topbar">
+      <NavLink to="/">Home</NavLink>
+      <NavLink to="/signin">Signin</NavLink>
+      <NavLink to="/cart">Cart</NavLink>
+    </nav>
   )
 }
 

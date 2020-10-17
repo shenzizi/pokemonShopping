@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
@@ -20,38 +19,35 @@ import './App.css';
 
 function App() {
   return (
-
     <div className="App">
-      <Router>
-        <Topbar />
-        <div className="main">
-          <ErrorHandler>
-            <Switch>
-              <Route path="/shop/:category/:id">
-                <CollectionItem />
-              </Route>
-              <Route path="/shop/:category">
-                <Collection />
-              </Route>
-              <Route path="/cart">
-                <Cart />
-              </Route>
-              <Route path="/async">
-                <Async />
-              </Route>
-              <Route path="/signin">
-                <Signin />
-              </Route>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route path="/404">
-                <Page404 />
-              </Route>
-            </Switch>
-          </ErrorHandler>
-        </div>
-      </Router>
+      <Topbar />
+      <div className="main">
+        <ErrorHandler>
+          <Switch>
+            <Route path="/shop/:category/:id">
+              <CollectionItem />
+            </Route>
+            <Route path="/shop/:category">
+              <Collection />
+            </Route>
+            <Route path="/cart">
+              <Cart />
+            </Route>
+            <Route path="/async">
+              <Async />
+            </Route>
+            <Route path="/signin">
+              <Signin />
+            </Route>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/404">
+              <Page404 />
+            </Route>
+          </Switch>
+        </ErrorHandler>
+      </div>
     </div>
   );
 }
