@@ -14,21 +14,12 @@ const transformData = resp => {
   return { [resp.id]: newData };
 }
 
-export const fetchPokemon = id => async dispatch => {
-  dispatch({ type: FETCH_POKEMON_START });
-
-  try {
-    const resp = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-    const data = await resp.json();
-
-    dispatch({
-      type: FETCH_POKEMON_SUCCESS,
-      data: transformData(data),
-      id
-    });
-
-  } catch {
-    dispatch({ type: FETCH_POKEMON_FAIL });
-
+export const fetchPokemon = (id) => {
+  return {
+    types: [FETCH_POKEMON_START, FETCH_POKEMON_SUCCESS, FETCH_POKEMON_FAIL],
+    shouldCallAPI: (state) => !state.pokemon[id],
+    callAPI: () => fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then(resp => resp.json()),
+    payload: { id },
+    transformData
   }
 }
