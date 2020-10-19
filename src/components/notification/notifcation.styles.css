@@ -1,0 +1,12 @@
+.notification {
+  display:none;
+  border: 1px solid green;
+  background-color: lightgreen;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notification.show {
+  display: flex;
+}

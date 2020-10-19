@@ -14,6 +14,7 @@ import Async from './pages/async/async.component';
 
 import Topbar from './components/topbar/topbar.component';
 import ErrorHandler from './pages/error-handler/error-handler.component';
+import Notification from './components/notification/notification.component';
 
 import './App.css';
 
@@ -21,6 +22,7 @@ function App() {
   return (
     <div className="App">
       <Topbar />
+      <Notification />
       <div className="main">
         <ErrorHandler>
           <Switch>
