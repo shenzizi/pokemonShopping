@@ -3,11 +3,8 @@ import {
   REMOVE_NOTIFICATION
 } from '../actions/notification';
 
-const intialState = {
-  showNotification: false
-}
 
-function notificationReducer(state = intialState, action) {
+function notificationReducer(state = {}, action) {
   switch (action.type) {
     case SHOW_NOTIFICATION:
       return {

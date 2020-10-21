@@ -14,6 +14,7 @@ import CollectionOverView from '../../components/collection-overview/collection-
 
 
 const Collection = ({ match }) => {
+  console.log('render Collection component');
   const dispatch = useDispatch();
 
   const { data, loading, error } = useSelector(state => state.pokemonCategory);

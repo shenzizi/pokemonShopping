@@ -5,6 +5,7 @@ import Page404 from '../404/404.component';
 import { useLocation } from 'react-router-dom';
 
 const ErrorHandler = ({ children }) => {
+  console.log('render ErrorHandler component');
   const location = useLocation();
   if (location.state) {
     switch (location.state.errorStatusCode) {

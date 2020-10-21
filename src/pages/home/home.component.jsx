@@ -18,6 +18,7 @@ import CollectionOverView from '../../components/collection-overview/collection-
 import './home.styles.css';
 
 const Home = () => {
+  console.log('render Home component');
   const dispatch = useDispatch();
 
   useEffect(() => {

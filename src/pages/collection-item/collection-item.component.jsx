@@ -1,6 +1,7 @@
 import React, {
   useEffect,
-  useCallback
+  useCallback,
+  useContext
 } from 'react';
 
 import {
@@ -17,7 +18,11 @@ import { fetchPokemon } from '../../actions/pokemonAction';
 
 import './collection-item.styles.css';
 
+import { NotifyContext } from '../../App';
+
 const CollectionItem = () => {
+  console.log('render CollectionItem component');
+  const { notifyDispatch } = useContext(NotifyContext);
   let history = useHistory();
   let { id } = useParams();
   const dispatch = useDispatch();
@@ -33,7 +38,15 @@ const CollectionItem = () => {
   }, [fetchData, id])
 
   const handleAddToCart = () => {
-    console.log('handleAddToCart');
+    const id = new Date().valueOf();
+    notifyDispatch({
+      type: 'ADD_NOTIFICATION',
+      payload: { [id]: { message: 'show', id } }
+    });
+
+    setTimeout(() => {
+      notifyDispatch({ type: 'REMOVE_NOTIFICATION', id })
+    }, 3000);
   }
 
   const pokemon = data && data[id];

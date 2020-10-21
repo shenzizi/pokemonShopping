@@ -5,6 +5,7 @@ import './topbar.styles.css';
 
 
 const Topbar = () => {
+  console.log('render Topbar component');
   return (
     <nav className="topbar">
       <NavLink to="/">Home</NavLink>

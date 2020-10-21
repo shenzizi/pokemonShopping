@@ -1,26 +1,29 @@
-import React from 'react';
-import {
-  useDispatch,
-  useSelector
-} from 'react-redux';
+import React, { useContext } from 'react';
+import { NotifyContext } from '../../App';
 
-import { removeNotification } from '../../actions/notification';
 import './notifcation.styles.css';
 
 const Notification = () => {
-  const dispatch = useDispatch();
-  const { showNotification } = useSelector(state => state.notification);
+  const { notification, notifyDispatch } = useContext(NotifyContext);
+  console.log('render Notification component');
 
-  console.log('show', showNotification);
-
-  const handleClick = () => {
-    dispatch(removeNotification());
+  const handleClick = (id) => {
+    notifyDispatch(
+      { type: 'REMOVE_NOTIFICATION', id }
+    );
   }
 
   return (
-    <div className={`notification ${showNotification ? 'show' : 'none'} `}>
-      <p>show notification</p>
-      <button onClick={handleClick}>X</button>
+    <div className={`notifications ${Object.keys(notification).length >= 1 ? 'show' : 'none'} `}>
+      {Object.values(notification).map((n, idx) => (
+        <div
+          key={n.id}
+          className={`notify n${idx}`}
+        >
+          {n.message} {n.id}
+          <button onClick={() => handleClick(n.id)}>X</button>
+        </div>
+      ))}
     </div>
   )
 }

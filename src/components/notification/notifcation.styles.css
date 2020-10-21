@@ -1,12 +1,17 @@
-.notification {
+.notifications {
   display:none;
-  border: 1px solid green;
-  background-color: lightgreen;
+}
+
+.notifications.show {
+  display: block;
+}
+
+.notifications .notify{
+  display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
+  background-color: lightgreen;
+  padding:5px;
 }
 
-.notification.show {
-  display: flex;
-}

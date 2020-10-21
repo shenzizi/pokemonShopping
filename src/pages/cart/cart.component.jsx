@@ -1,17 +1,23 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { showNotification, removeNotification } from '../../actions/notification';
+import React, { useContext } from 'react';
+import { NotifyContext } from '../../App';
 
 import './cart.styles.css';
 
 const Cart = () => {
-  const dispatch = useDispatch();
+  const { notifyDispatch } = useContext(NotifyContext);
+
   const handleClick = () => {
-    dispatch(showNotification({ id: new Date().valueOf(), message: 'show notification' }));
-    setTimeout(function remove() {
-      dispatch(removeNotification());
-    }, 2000);
+    const id = new Date().valueOf();
+    notifyDispatch({
+      type: 'ADD_NOTIFICATION',
+      payload: { [id]: { message: 'show', id } }
+    });
+
+    setTimeout(() => {
+      notifyDispatch({ type: 'REMOVE_NOTIFICATION', id })
+    }, 3000);
   }
+
   return (
     <>
       <div className='cart'>cart</div>
